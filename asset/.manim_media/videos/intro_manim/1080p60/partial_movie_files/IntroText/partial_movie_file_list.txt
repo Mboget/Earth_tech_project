@@ -1,0 +1,6 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/mathi/Documents/EFREI/P1-INT/Projet_transverse/Earth_tech_project/asset/.manim_media/videos/intro_manim/1080p60/partial_movie_files/IntroText/3838283033_297315500_223132457.mp4'
+file 'file:C:/Users/mathi/Documents/EFREI/P1-INT/Projet_transverse/Earth_tech_project/asset/.manim_media/videos/intro_manim/1080p60/partial_movie_files/IntroText/2187727443_2582533161_428752504.mp4'
+file 'file:C:/Users/mathi/Documents/EFREI/P1-INT/Projet_transverse/Earth_tech_project/asset/.manim_media/videos/intro_manim/1080p60/partial_movie_files/IntroText/2187727443_2636485698_1089490030.mp4'
+file 'file:C:/Users/mathi/Documents/EFREI/P1-INT/Projet_transverse/Earth_tech_project/asset/.manim_media/videos/intro_manim/1080p60/partial_movie_files/IntroText/2187727443_3932249147_3387689452.mp4'
+file 'file:C:/Users/mathi/Documents/EFREI/P1-INT/Projet_transverse/Earth_tech_project/asset/.manim_media/videos/intro_manim/1080p60/partial_movie_files/IntroText/2187727443_888952787_3247686471.mp4'
