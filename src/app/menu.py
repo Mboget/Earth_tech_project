@@ -56,7 +56,12 @@ def run(screen):
                 if quit_rect.collidepoint(event.pos):
                     return "quit"
 
-        screen.fill(const.WHITE)
+        # Draw background or fill with white
+        if const.BACKGROUND_IMAGE:
+            bg_img = pygame.transform.scale(const.BACKGROUND_IMAGE, (width, height))
+            screen.blit(bg_img, (0, 0))
+        else:
+            screen.fill(const.WHITE)
 
         title = title_font.render("Waste Sorter", True, const.BLACK)
         screen.blit(title, (width // 2 - title.get_width() // 2, height // 2 - 140))
@@ -71,7 +76,9 @@ def run(screen):
         pygame.display.flip()
 
 
-def run_level_select(screen, max_level, unlocked_level):
+def run_level_select(screen, max_level, unlocked_level, level_stars=None):
+    if level_stars is None:
+        level_stars = {}
     width, height = screen.get_size()
     clock = pygame.time.Clock()
     title_font = pygame.font.SysFont("arial", 32, bold=True)
@@ -121,7 +128,12 @@ def run_level_select(screen, max_level, unlocked_level):
                         if i <= unlocked_level:
                             return i
 
-        screen.fill(const.WHITE)
+        # Draw background or fill with white
+        if const.BACKGROUND_IMAGE:
+            bg_img = pygame.transform.scale(const.BACKGROUND_IMAGE, (width, height))
+            screen.blit(bg_img, (0, 0))
+        else:
+            screen.fill(const.WHITE)
 
         title = title_font.render("Choisir un niveau", True, const.BLACK)
         screen.blit(title, (width // 2 - title.get_width() // 2, height // 2 - 140))
@@ -129,7 +141,10 @@ def run_level_select(screen, max_level, unlocked_level):
         for i, rect in enumerate(level_rects, start=1):
             locked = i > unlocked_level
             hover = rect.collidepoint(mouse_pos) and not locked
+            stars = level_stars.get(str(i), level_stars.get(i, 0))
             label = f"Niveau {i}"
+            if stars > 0 and not locked:
+                label = f"Niveau {i} ({stars}★)"
             if locked:
                 label = f"Niveau {i} (lock)"
             draw_button(screen, rect, label, button_font, hover=hover)
@@ -180,7 +195,12 @@ def run_controls(screen, current_controls="wasd"):
                 if zqsd_rect.collidepoint(event.pos):
                     return "zqsd"
 
-        screen.fill(const.WHITE)
+        # Draw background or fill with white
+        if const.BACKGROUND_IMAGE:
+            bg_img = pygame.transform.scale(const.BACKGROUND_IMAGE, (width, height))
+            screen.blit(bg_img, (0, 0))
+        else:
+            screen.fill(const.WHITE)
 
         title = title_font.render("Choix des controles", True, const.BLACK)
         screen.blit(title, (width // 2 - title.get_width() // 2, height // 2 - 140))

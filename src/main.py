@@ -120,35 +120,42 @@ def main():
     progress = load_progress()
     unlocked_level = progress.get("unlocked_level", 1)
     controls = progress.get("controls")
+    level_stars = progress.get("level_stars", {})
     if not controls:
         controls = detect_default_controls()
-        save_progress(unlocked_level, controls)
+        save_progress(unlocked_level, controls, level_stars)
 
     play_intro(screen, str(intro_path), show_missing=False)
 
     while True:
         choice = run_menu(screen)
         if choice == "play_solo":
-            completed = run_game(screen, start_level=1, max_level=max_level, controls=controls)
-            if isinstance(completed, int) and completed >= unlocked_level:
-                unlocked_level = min(max_level, completed + 1)
-                save_progress(unlocked_level, controls)
+            completed, completed_stars = run_game(screen, start_level=1, max_level=max_level, controls=controls)
+            if isinstance(completed, int):
+                for lvl, stars in completed_stars.items():
+                    level_stars[str(lvl)] = max(level_stars.get(str(lvl), 0), stars)
+                if completed >= unlocked_level:
+                    unlocked_level = min(max_level, completed + 1)
+                save_progress(unlocked_level, controls, level_stars)
         elif choice == "play_duo":
             run_game(screen, start_level=1, max_level=max_level, controls=controls, two_players=True)
         elif choice == "levels":
-            selection = run_level_select(screen, max_level=max_level, unlocked_level=unlocked_level)
+            selection = run_level_select(screen, max_level=max_level, unlocked_level=unlocked_level, level_stars=level_stars)
             if selection == "back":
                 continue
             if isinstance(selection, int):
-                completed = run_game(screen, start_level=selection, max_level=max_level, controls=controls)
-                if isinstance(completed, int) and completed >= unlocked_level:
-                    unlocked_level = min(max_level, completed + 1)
-                    save_progress(unlocked_level, controls)
+                completed, completed_stars = run_game(screen, start_level=selection, max_level=max_level, controls=controls)
+                if isinstance(completed, int):
+                    for lvl, stars in completed_stars.items():
+                        level_stars[str(lvl)] = max(level_stars.get(str(lvl), 0), stars)
+                    if completed >= unlocked_level:
+                        unlocked_level = min(max_level, completed + 1)
+                    save_progress(unlocked_level, controls, level_stars)
         elif choice == "controls":
             new_controls = run_controls(screen, current_controls=controls)
             if new_controls in ("wasd", "zqsd"):
                 controls = new_controls
-                save_progress(unlocked_level, controls)
+                save_progress(unlocked_level, controls, level_stars)
         else:
             break
 

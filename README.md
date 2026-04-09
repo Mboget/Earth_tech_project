@@ -55,6 +55,8 @@ Progress is stored in:
 Earth_tech_project/
   .gitignore
   assets/
+    intro_manim.py
+    intro.mp4
   src/
     main.py
     app/

@@ -42,6 +42,7 @@ def run(screen, start_level=1, max_level=6, controls="wasd", two_players=False):
     aim_current = pygame.Vector2(0, 0)
     paused = False
     completed_level = start_level - 1
+    level_stars = {}
     time_acc = 0.0
     base_bin_ys = [b["rect"].y for b in bins]
     bin_phases = [i * 0.8 for i in range(len(bins))]
@@ -74,7 +75,7 @@ def run(screen, start_level=1, max_level=6, controls="wasd", two_players=False):
                     if resume_rect.collidepoint(event.pos):
                         paused = False
                     elif quit_rect.collidepoint(event.pos):
-                        return completed_level
+                        return completed_level, level_stars
                     continue
                 if not item.launched:
                     mouse = pygame.Vector2(event.pos)
@@ -149,9 +150,10 @@ def run(screen, start_level=1, max_level=6, controls="wasd", two_players=False):
 
         # Level up
         if level_points >= points_needed:
-            space_result = run_space_game(screen, level=level, controls=controls, two_players=two_players)
+            space_result, stars_collected = run_space_game(screen, level=level, controls=controls, two_players=two_players)
             if space_result != "completed":
-                return completed_level
+                return completed_level, level_stars
+            level_stars[level] = max(level_stars.get(level, 0), stars_collected)
             completed_level = max(completed_level, level)
             level += 1
             level_points = 0
@@ -162,7 +164,7 @@ def run(screen, start_level=1, max_level=6, controls="wasd", two_players=False):
                 screen.blit(msg, (width // 2 - msg.get_width() // 2, height // 2 - 20))
                 pygame.display.flip()
                 pygame.time.delay(1500)
-                return max_level
+                return max_level, level_stars
             bin_width, bin_height, preview_steps, points_needed = _level_config(level)
             bins = create_bins(width, height, bin_width=bin_width, bin_height=bin_height)
             left_bins = bins[3:]
@@ -175,7 +177,12 @@ def run(screen, start_level=1, max_level=6, controls="wasd", two_players=False):
             bin_phases = [i * 0.8 for i in range(len(bins))]
             player_turn = 1
 
-        screen.fill(const.WHITE)
+        # Draw background or fill with white
+        if const.BACKGROUND_IMAGE:
+            bg_img = pygame.transform.scale(const.BACKGROUND_IMAGE, (width, height))
+            screen.blit(bg_img, (0, 0))
+        else:
+            screen.fill(const.WHITE)
 
         # Moving bins on specific levels (example: from level 3)
         if level >= 3:
