@@ -1,5 +1,30 @@
-\venv
+# Python environment
+venv/
+env/
 
-\src\app\progress.json
-\asset\intro.mp4
-\asset\.manim_media\
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Project-specific
+src/app/progress.json
+asset/intro.mp4
+asset/.manim_media/
+
+# Generated files
+*.egg-info/
+.pytest_cache/
+.coverage
+
