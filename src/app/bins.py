@@ -25,16 +25,12 @@ def draw_bins(screen, bins, font):
             # Draw bin image
             bin_img = pygame.transform.scale(const.BIN_IMAGE, (b["rect"].width, b["rect"].height))
             screen.blit(bin_img, b["rect"])
-            # Draw subtle border instead of thick black border for transparency
-            pygame.draw.rect(screen, const.BLACK, b["rect"], 1)
         else:
             # Fallback to colored rectangle
             pygame.draw.rect(screen, b["color"], b["rect"])
-            # Draw border
-            pygame.draw.rect(screen, const.BLACK, b["rect"], 2)
         
         # Draw label
         label = font.render(b["name"], True, const.BLACK)
-        label_rect = label.get_rect(center=(b["rect"].centerx, b["rect"].centery))
+        label_rect = label.get_rect(midbottom=(b["rect"].centerx, b["rect"].bottom))
         screen.blit(label, label_rect)
 
