@@ -16,7 +16,7 @@ class WasteItem:
 
     def reset(self):
         self.kind, self.color = random.choice(const.TRASH_TYPES)
-        self.radius = 18
+        self.radius = 30
         self.pos = pygame.Vector2(self.spawn_pos)
         self.vel = pygame.Vector2(0, 0)
         self.launched = False
@@ -43,9 +43,7 @@ class WasteItem:
                 # Fallback to circle if rotation fails
                 print(f"Error rotating image: {e}")
                 pygame.draw.circle(screen, self.color, self.pos, self.radius)
-                pygame.draw.circle(screen, const.BLACK, self.pos, self.radius, 2)
         else:
             # Fallback to circle if image not loaded
             pygame.draw.circle(screen, self.color, self.pos, self.radius)
-            pygame.draw.circle(screen, const.BLACK, self.pos, self.radius, 2)
 

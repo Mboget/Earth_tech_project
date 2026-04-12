@@ -33,14 +33,15 @@ def run(screen, start_level=1, max_level=6, controls="wasd", two_players=False):
     left_bins = bins[3:]
     right_bins = bins[:3]
     left_cluster_right = max(b["rect"].right for b in left_bins)
-    spawn_x = left_cluster_right + 80
-    spawn_y = bins[0]["rect"].centery
+    spawn_x = width // 2
+    spawn_y = height // 2
     item = WasteItem(width, height, (spawn_x, spawn_y))
     score = 0
     aiming = False
     aim_start = pygame.Vector2(0, 0)
     aim_current = pygame.Vector2(0, 0)
     paused = False
+    full_preview = False
     completed_level = start_level - 1
     level_stars = {}
     time_acc = 0.0
@@ -66,6 +67,9 @@ def run(screen, start_level=1, max_level=6, controls="wasd", two_players=False):
 
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 paused = not paused
+
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+                full_preview = not full_preview
 
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if close_rect.collidepoint(event.pos):
@@ -170,8 +174,8 @@ def run(screen, start_level=1, max_level=6, controls="wasd", two_players=False):
             left_bins = bins[3:]
             right_bins = bins[:3]
             left_cluster_right = max(b["rect"].right for b in left_bins)
-            spawn_x = left_cluster_right + 80
-            spawn_y = bins[0]["rect"].centery
+            spawn_x = width // 2
+            spawn_y = height // 2
             item = WasteItem(width, height, (spawn_x, spawn_y))
             base_bin_ys = [b["rect"].y for b in bins]
             bin_phases = [i * 0.8 for i in range(len(bins))]
@@ -196,11 +200,16 @@ def run(screen, start_level=1, max_level=6, controls="wasd", two_players=False):
         if aiming and not paused:
             preview_vel = (aim_start - aim_current) * const.POWER
             points = predict_trajectory(item.pos, preview_vel, steps=preview_steps)
-            cutoff_x = min(b["rect"].left for b in right_bins)
-            for p in points:
-                if p[0] >= cutoff_x:
-                    break
-                pygame.draw.circle(screen, const.GRAY, p, 3)
+            if not full_preview:
+                cutoff_left = max(b["rect"].right for b in left_bins)
+                cutoff_x = min(b["rect"].left for b in right_bins)
+                for p in points:
+                    if p[0] <= cutoff_left or p[0] >= cutoff_x:
+                        break
+                    pygame.draw.circle(screen, const.GRAY, p, 3)
+            else:
+                for p in points:
+                    pygame.draw.circle(screen, const.GRAY, p, 3)
 
         draw_bins(screen, bins, font)
         item.draw(screen)

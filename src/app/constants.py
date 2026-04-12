@@ -25,14 +25,14 @@ ASSET_DIR = Path(__file__).resolve().parent.parent.parent / "asset" / "images"
 # ===== CONFIGURATION DES ASSETS =====
 # Modifie simplement les chemins des fichiers ici pour chaque type de déchet
 WASTE_FILES = {
-    "bottles": "bottle.jpg",
-    "plastic": "plastic bag.jpg",
-    "bags": "trash bag.jpg",
+    "bottles": "bottle.png",
+    "plastic": "plastic bag.png",
+    "bags": "trash bag.png",
 }
 
-BIN_FILE = "coubelle ouverte.jpg"
-BACKGROUND_FILE = "background.jpg"
-TURTLE_FILE = "turtlee.jpg"
+BIN_FILE = "coubelle ouverte.png"
+BACKGROUND_FILE = "background.png"
+TURTLE_FILE = "turtlee.png"
 # ===== FIN CONFIGURATION =====
 
 # Load waste item images
