@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 import venv
 import shutil
+from codecarbon import EmissionsTracker
 
 
 def _ensure_requirements():
@@ -162,6 +163,10 @@ def main():
     pygame.quit()
     sys.exit()
 
-
-if __name__ == "__main__":
-    main()
+tracker= EmissionsTracker
+tracker.start()
+try:
+    if __name__ == "__main__":
+     main()
+finally:
+    tracker.stop()
