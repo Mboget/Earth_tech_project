@@ -5,8 +5,8 @@ class IntroText(Scene):
     def construct(self):
         self.camera.background_color = "#0b1a2b"
 
-        title = Text("test", font="Montserrat", color="#f2f2f2").scale(2.2)
-        glow = Text("test", font="Montserrat", color="#4fd1ff").scale(2.35)
+        title = Text("Flow & Fins", font="Montserrat", color="#f2f2f2").scale(2.2)
+        glow = Text("Flow & Fins", font="Montserrat", color="#4fd1ff").scale(2.35)
         glow.set_opacity(0.35)
 
         self.play(FadeIn(glow, shift=DOWN * 0.2, scale=1.05), run_time=0.8)

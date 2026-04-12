@@ -20,8 +20,12 @@ Thumbs.db
 
 # Project-specific
 src/app/progress.json
-asset/intro.mp4
+# asset/intro.mp4  # Keep this file in git
 asset/.manim_media/
+# Manim generated files (except intro.mp4)
+media/
+.manim_media/
+manim.log
 
 # Generated files
 *.egg-info/

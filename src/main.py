@@ -163,10 +163,10 @@ def main():
     pygame.quit()
     sys.exit()
 
-tracker= EmissionsTracker
-tracker.start()
-try:
-    if __name__ == "__main__":
-     main()
-finally:
-    tracker.stop()
+if __name__ == "__main__":
+    tracker = EmissionsTracker()
+    tracker.start()
+    try:
+        main()
+    finally:
+        tracker.stop()
